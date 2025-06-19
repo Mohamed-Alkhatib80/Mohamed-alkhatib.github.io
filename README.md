@@ -1,4 +1,8 @@
+from pathlib import Path
+from zipfile import ZipFile
 
+# Create the HTML content from the previous message
+html_content = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,27 +23,17 @@
       background: white;
       padding: 40px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      text-align: center;
     }
     h1, h2 {
       color: #007acc;
     }
     ul {
       padding-left: 20px;
-      text-align: left;
-    }
-    img.profile {
-      border-radius: 50%;
-      width: 150px;
-      height: 150px;
-      object-fit: cover;
-      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="profile.jpg" alt="Mohammed Alkhatib" class="profile">
     <h1>Mohammed Alkhatib</h1>
     <p><strong>Spa Manager | Massage Therapist | Team Leader</strong></p>
 
@@ -85,3 +79,18 @@
   </div>
 </body>
 </html>
+"""
+
+# Define paths
+html_file_path = Path("/mnt/data/index.html")
+zip_file_path = Path("/mnt/data/mohamedalkhatib_site.zip")
+
+# Write the HTML file
+html_file_path.write_text(html_content, encoding='utf-8')
+
+# Create a ZIP file
+with ZipFile(zip_file_path, 'w') as zipf:
+    zipf.write(html_file_path, arcname='index.html')
+
+# Return the path to the zip file
+zip_file_path.name
